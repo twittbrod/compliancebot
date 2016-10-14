@@ -1,0 +1,8 @@
+env_make
+secrets.yml
+node_modules
+drone_secrets.yml
+.idea/
+drone-secrets.yml
+env.list
+deploy-compliancebot.json
