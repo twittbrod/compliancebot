@@ -86,14 +86,14 @@ flint.hears('/help', function(bot, trigger) {
 
 flint.hears('/addcompliance', function(bot, trigger) {
     // get regex as string
-    var str = trigger.args[1]
+    var str = trigger.args[1];
     console.log('trigger.args[1]: ' + str);
 
     // convert string to regex
         // store as string -- convert to regex at evaluation time
 
     // store regex
-    console.log('var.recall(1): ' + var.recall('1'));
+    console.log('bot.recall(1): ' + bot.recall('1'));
     for (var i=1; bot.recall(i.toString()); i++) {
         console.log(i);
         bot.say(i + '   ' + bot.recall(i.toString()));
@@ -102,9 +102,10 @@ flint.hears('/addcompliance', function(bot, trigger) {
     bot.store(i.toString(), str);
 });
 
+
 // list the compliance regular expressions that are in effect
 flint.hears('/listcompliance', function(bot, trigger) {
-    console.log('var.recall(1): ' + var.recall('1'));
+    console.log('bot.recall(1): ' + bot.recall('1'));
     for (var i=1; bot.recall(i.toString()); i++) {
         console.log(i);
         bot.say(i + '   ' + bot.recall(i.toString()));
@@ -120,7 +121,7 @@ flint.hears('/removecompliance', function(bot, trigger) {
     console.log('bot.recall(thiskey): ' + bot.recall(thiskey));
 
     // if thiskey is defined...
-    if bot.recall(thiskey) {
+    if (bot.recall(thiskey)) {
         nextkey = parseInt(thiskey) + 1;
         console.log('nextkey: ' + nextkey);
         console.log('bot.recall(nextkey.toString()): ' + bot.recall(nextkey.toString()));
@@ -154,28 +155,38 @@ flint.hears('/removecompliance', function(bot, trigger) {
 //  #perform compliance check#
 // (change * below to #)
 flint.hears(/.$/, function(bot, trigger) {
-    // retrieve regex
-
-    // comapare regex for all parts of message
     var compliant = true;
-    for (var i=0; i < trigger.args.length; i++) {
-        check = trigger.args[i].match(myregex);
-        if check.length > 0 {
-            trigger.args[i] = "XXXXXXXXXXX";
-            compliant = false;
+    var myregex = new RegExp('');
+    var check = '';
+
+    // retrieve regex
+    for (var key=1; bot.recall(key.toString()); key++) {
+        console.log(key);
+//        bot.say(i + '   ' + bot.recall(i.toString()));
+
+        // comapare regex for all parts of message
+        for (var argpart=0; i < trigger.args.length; argpart++) {
+            myregex = new RegExp(trigger.args[argpart]);
+            console.log('myregex: ' + myregex);
+            check = trigger.args[argpart].match(myregex);
+            console.log('check: ' + check);
+            if (check.length > 0) {
+                trigger.args[argpart] = "XXXXXXXXXXX";
+                compliant = false;
+            }
         }
     }
 
     // delete/mask if match
-    if compliant == false {
-        bot.say('You can't say that!);
+    if (compliant == false) {
+        bot.say('You can not say that!);
         request({
                 url: "https://api.ciscospark.com/v1/messages/" + messageList.items[i].id,
                 method: "DELETE",
                 headers: {
                     "Authorization": "Bearer " + token_spark,
                     "Content-Type": "application/json"
-                },  //headers
+                }  //headers
             },  //request parameters - delete message
             function (error, response, body) {
                 if(error) {
@@ -194,7 +205,7 @@ flint.hears(/.$/, function(bot, trigger) {
 
 flint.hears('/compliancetest', function(bot, trigger) {
     // get regex as string
-    // generic 16 digit numberic code: [0-9]{13}
+    // generic 16 digit numberic code: [0-9]{16}
     console.log("/compliance");
     bot.say("test starting");
     var str1 = "[0-9]{16}";
@@ -253,4 +264,4 @@ function getRoomDetails(roomId, tokenSpark, callback) {
             callback(error, body);
         } //function
     ); //request
-}; //function getRoomDetails
+} //function getRoomDetails
