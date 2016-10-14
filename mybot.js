@@ -71,6 +71,10 @@ flint.hears('/getroomdetails', function(bot, trigger) {
 flint.hears('/marco', function(bot, trigger) {
     bot.say('polo');
 });
+// announce bot presence in room
+flint.hears('/marco', function(bot, trigger) {
+    bot.say('polo');
+});
 
 
 // documenting the bot - general
@@ -96,7 +100,7 @@ flint.hears('/addcompliance', function(bot, trigger) {
     console.log('bot.recall(1): ' + bot.recall('1'));
     for (var i=1; bot.recall(i.toString()); i++) {
         console.log(i);
-        bot.say(i + '   ' + bot.recall(i.toString()));
+        bot.say('Index: ' + i + '   ' + bot.recall(i.toString()));
     }
     console.log('out of loop i: ' + i);
     bot.store(i.toString(), str);
@@ -106,9 +110,14 @@ flint.hears('/addcompliance', function(bot, trigger) {
 // list the compliance regular expressions that are in effect
 flint.hears('/listcompliance', function(bot, trigger) {
     console.log('bot.recall(1): ' + bot.recall('1'));
-    for (var i=1; bot.recall(i.toString()); i++) {
-        console.log(i);
-        bot.say(i + '   ' + bot.recall(i.toString()));
+    // the first item in the compliance list is 1 (as a string)
+    if (bot.recall('1')) {
+        for (var i=1; bot.recall(i.toString()); i++) {
+            console.log(i);
+            bot.say(i + '   ' + bot.recall(i.toString()));
+        }
+    } else {
+        bot.say('Compliance list is empty.');
     }
 });
 
@@ -161,7 +170,7 @@ flint.hears(/.$/, function(bot, trigger) {
 
     // retrieve regex
     for (var key=1; bot.recall(key.toString()); key++) {
-        console.log(key);
+        console.log('compliance check: ' + key);
 //        bot.say(i + '   ' + bot.recall(i.toString()));
 
         // comapare regex for all parts of message
@@ -172,6 +181,7 @@ flint.hears(/.$/, function(bot, trigger) {
             console.log('check: ' + check);
             if (check.length > 0) {
                 trigger.args[argpart] = "XXXXXXXXXXX";
+                console.log('match! ' + trigger.args[argpart]);
                 compliant = false;
             }
         }
