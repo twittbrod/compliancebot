@@ -179,7 +179,7 @@ flint.hears(/.$/, function(bot, trigger) {
 
     // delete/mask if match
     if (compliant == false) {
-        bot.say('You can not say that!);
+        bot.say('You can not say that!');
         request({
                 url: "https://api.ciscospark.com/v1/messages/" + messageList.items[i].id,
                 method: "DELETE",
@@ -230,6 +230,12 @@ flint.hears('/compliancetest', function(bot, trigger) {
     res = str4.match(myregex);
     console.log("str4: " + str4);
     console.log("res: " + res);
+
+    var str3 = "123456789 123456";
+    res = str4.match(myregex);
+    console.log("str4: " + str4);
+    console.log("res: " + res);
+
 
     bot.say("test done");
 
