@@ -1,0 +1,28 @@
+{
+  "container": {
+    "type": "DOCKER",
+    "docker": {
+      "image": "twittbrod/compliancebot:latest",
+      "forcePullImage": true,
+      "network": "BRIDGE",
+      "portMappings": [{
+        "containerPort": 8080,
+        "hostPort": 0
+      }]
+    },
+    "forcePullImage": true
+  },
+  "healthChecks": [{
+    "protocol": "TCP",
+    "portIndex": 0
+  }],
+  "id": "/ENV_FOLDER_NAME/ENV_DEPLOYMENT_NAME/compliancebot",
+  "instances": 1,
+  "cpus": 0.1,
+  "mem": 16,
+  "env": {
+    "TOKEN_SPARK_BOT": "ENV_TOKEN_SPARK_BOT",
+    "MANTL_CONTROL": "ENV_MANTL_CONTROL",
+    "APP_URL": "http://ENV_FOLDER_NAME-ENV_DEPLOYMENT_NAME-compliancebot.ENV_APP_DOMAIN"
+  }
+}
