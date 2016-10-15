@@ -167,14 +167,57 @@ flint.hears(/.$/, function(bot, trigger) {
     var compliant = true;
     var myregex = new RegExp('');
     var check = '';
+    var msg = trigger.text;
+    console.log('msg: ' + msg);
 
     // retrieve regex
     for (var key=1; bot.recall(key.toString()); key++) {
         console.log('compliance check: ' + key);
 //        bot.say(i + '   ' + bot.recall(i.toString()));
+        myregex = new RegExp(bot.recall(key.toString()));
+        console.log('myregex: ' + myregex);
 
-        // comapare regex for all parts of message
-        for (var argpart=0; i < trigger.args.length; argpart++) {
+        // apply regex to replace instance in string
+        msg = msg.replace(myregex, "XXXXXXXXX");
+        console.log('key: ' + key + '  msg: ' + msg);
+    }
+
+    // check if message changed
+    console.log('out of foor loop.  msg: ' + msg);
+    console.log('trigger.text: ' + trigger.text);
+    if (msg != trigger.text) {
+        // if new message does not match original, then it changed -- non-compliant
+        // delete the message and restate the message
+        bot.say('You can not say that!');
+
+        // delete the message
+        console.log('trigger.id: ' + trigger.id);
+        request({
+                url: "https://api.ciscospark.com/v1/messages/" + trigger.id,
+                method: "DELETE",
+                headers: {
+                    "Authorization": "Bearer " + token_spark,
+                    "Content-Type": "application/json"
+                }  //headers
+            },  //request parameters - delete message
+            function (error, response, body) {
+                if(error) {
+                    console.log("delete error: " + error);
+                } else {
+                    console.log("delete body: " + body);
+                }
+            } //function - request delete message
+        ); //request - delete message
+
+        // restate the message
+        console.log('restate the message now');
+        bot.say(trigger.personDisplayName + ": " + msg);
+    }
+
+
+
+    // compare regex for all parts of message
+/*        for (var argpart=0; i < trigger.args.length; argpart++) {
             myregex = new RegExp(trigger.args[argpart]);
             console.log('myregex: ' + myregex);
             check = trigger.args[argpart].match(myregex);
@@ -208,6 +251,7 @@ flint.hears(/.$/, function(bot, trigger) {
         ); //request - delete message
         bot.say(trigger.personDisplayName + ": " + trigger.args);
     }
+*/
 });
 
 
@@ -241,9 +285,9 @@ flint.hears('/compliancetest', function(bot, trigger) {
     console.log("str4: " + str4);
     console.log("res: " + res);
 
-    var str3 = "123456789 123456";
-    res = str4.match(myregex);
-    console.log("str4: " + str4);
+    var str5 = "123456789 123456";
+    res = str5.match(myregex);
+    console.log("str5: " + str5);
     console.log("res: " + res);
 
 
