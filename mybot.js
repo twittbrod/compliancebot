@@ -129,7 +129,7 @@ flint.hears('/removecompliance', function(bot, trigger) {
     console.log('thiskey: ' + thiskey);
     console.log('bot.recall(thiskey): ' + bot.recall(thiskey));
 
-    // if thiskey is defined...
+    // if thiskey is defined then delete it and rotate any subsequent keys up
     if (bot.recall(thiskey)) {
         nextkey = parseInt(thiskey) + 1;
         console.log('nextkey: ' + nextkey);
@@ -140,8 +140,8 @@ flint.hears('/removecompliance', function(bot, trigger) {
             console.log('bot.recall(x.toString()): ' + bot.recall(x.toString()));
             thiskey = x - 1;
             console.log('thiskey: ' + thiskey);
-            // copy nextket to thiskey
-            bot.store(thiskey.toString(), bot.recall(nextkey.toString()));
+            // copy nextkey to thiskey
+            bot.store(thiskey.toString(), bot.recall(x.toString()));
         }
 
         // loop ended when nextkey is no longer define, so delete thiskey
