@@ -72,7 +72,7 @@ flint.hears('/marco', function(bot, trigger) {
     bot.say('polo');
 });
 // announce bot presence in room
-flint.hears('/marco', function(bot, trigger) {
+flint.hears('marco', function(bot, trigger) {
     bot.say('polo');
 });
 
