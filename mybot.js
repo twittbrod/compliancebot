@@ -12,8 +12,9 @@ require('should');
 
 var app_url = process.env.APP_URL + "/flint";
 console.log("app_url: " + app_url);
-console.log("process.env.TOKEN_SPARK_BOT: " + process.env.TOKEN_SPARK_BOT);
+//console.log("process.env.TOKEN_SPARK_BOT: " + process.env.TOKEN_SPARK_BOT);
 var token_spark = process.env.TOKEN_SPARK_BOT;
+console.log("token_spark: " + token_spark);
 
 // flint options
 var config = {
