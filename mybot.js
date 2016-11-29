@@ -80,7 +80,11 @@ flint.hears('marco', function(bot, trigger) {
 
 // documenting the bot - general
 flint.hears('/help', function(bot, trigger) {
-    bot.say('I am the demo bot.  I am a living bot that will grow to satisfy many use cases.  If you have an idea and wonder what I can, ask.  Here are my commands:');
+    bot.say('I am theComplianceBot.  Give me compliance requirements in the form of regular expressions and I will monitor the room and delete any messages that match the passed regular expressions.  Here are my commands:');
+    bot.say('  - /addcompliance <regex> - add <regex> to be a monitored compliance restriction. \n' +
+            '       For example: /addcompliance [0-9]{16} will match identify any 16 digit number entered in the room');
+    bot.say('  - /listcompliance - show a list of all compliance registered expressions being monitored');
+    bot.say('  - /removecompliance <regex_id> - remove the compliance restriction with the index <regex_id>.  The <regex_id> can be found by executing /listcompliance ');
     bot.say('  - /help - you should have this one figured out already');
     bot.say('  - /marco - the bot will reply with polo.  Use this command to ask all (Tim Wittbrod developed) bots in the room to announce themselves.');
     bot.say("  - /getroomdetails - return the Spark room details of a hard coded room ID");
